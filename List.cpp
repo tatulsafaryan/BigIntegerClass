@@ -171,20 +171,20 @@ List::List(){
 
  List List::sub(const List& list1,const List& list2) {
    int max_length = 0;
-   List nvazeli;//I can't find english version of nvazeli
-   List haneli; //I can't find english version of haneli
-   bool nshan;
+   List diminished;
+   List removable;
+   bool mark;
    if(list1.length > list2.length) {
        max_length = list1.length;
-       nvazeli = list1;
-       haneli = list2;
-       nshan = true;
+       diminished = list1;
+       removable = list2;
+       mark = true;
     }
     else if(list1.length < list2.length) {
        max_length = list2.length;
-       nvazeli = list2;
-       haneli = list1;
-       nshan = false;
+       diminished = list2;
+       removable = list1;
+       mark = false;
     }
     else {
       max_length = list1.length;
@@ -196,33 +196,33 @@ List::List(){
           node2_head = node2_head->next;
         }
         else if(node1_head->data > node2_head->data){
-         nvazeli = list1;
-         haneli = list2;
-         nshan = true;
+         diminished = list1;
+         removable = list2;
+         mark = true;
          break;
         }
         else if(node1_head->data < node2_head->data){
-         nvazeli = list2;
-         haneli = list1;
-         nshan = false;
+         diminished = list2;
+         removable = list1;
+         mark = false;
          break;
         }
       }
     }
     List list4;
-    if(!nvazeli.head){
+    if(!diminished.head){
         list4.pushFront(0);
         return list4;
     }
-    Node* node1 = nvazeli.teil;
-    Node* node2 = haneli.teil;
+    Node* node1 = diminished.teil;
+    Node* node2 = removable.teil;
     int tmp_data1;
     int tmp_data2;
     for(int i = max_length-1; i >= 0; --i){
       tmp_data1 = node1->data;
       tmp_data2 = node2->data;
       if(tmp_data1 >= tmp_data2){
-         if(i == 0 && nshan == false)
+         if(i == 0 && mark == false)
            list4.pushFront((tmp_data1 - tmp_data2)*(-1));
          else
            list4.pushFront(tmp_data1 - tmp_data2);
@@ -251,7 +251,7 @@ List::List(){
           currentNode = currentNode->next;
           currentNode->data += 9;
         }
-         if(i == 0 && nshan == false)
+         if(i == 0 && mark == false)
            list4.pushFront((tmp_data1 + 10 - tmp_data2)*(-1));
          else
            list4.pushFront(tmp_data1 + 10 - tmp_data2);
@@ -275,7 +275,7 @@ List::List(){
         tmp_node->next = nullptr;
         delete tmp_node;
       }
-      if(nshan == false){
+      if(mark == false){
         list4.head->data = -1* list4.head->data;
       }
     }
